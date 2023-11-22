@@ -22,9 +22,6 @@ issues:
 source-code: https://github.com/codespell-project/codespell
 website: https://github.com/codespell-project/codespell
 
-build-packages:
-  - curl
-
 parts:
   codespell:
     plugin: python
