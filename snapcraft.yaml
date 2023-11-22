@@ -1,4 +1,4 @@
-name: codespell
+name: lengau-codespell
 version: v2.2.6
 summary: Fix common misspellings in your code
 # noinspection YAMLSchemaValidation
