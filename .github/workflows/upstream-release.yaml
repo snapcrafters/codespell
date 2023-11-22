@@ -38,7 +38,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Ruff ${{ matrix.tag }}
+          name: Codespell ${{ matrix.tag }}
           body: See upstream release at https://github.com/codespell-project/codespell/releases/tag/${{ matrix.tag }}
           prerelease: ${{ contains(matrix.tag, 'pre') }}
           tag_name: ${{ matrix.tag }}
