@@ -4,15 +4,11 @@ A [snap](https://snapcraft.io/about) package for [codespell](https://github.com/
 
 ## Installing
 
-<!--[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/codespell)
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/lengau-codespell)
 
-    sudo snap install codespell
+    sudo snap install lengau-codespell
+    sudo snap alias lengau-codespell.codespell codespell
 
--->
-
-Codespell is not yet available on the snap store, but you can download the most recent build [from Launchpad](https://launchpad.net/~lengau/codespell-snap/+snap/codespell-stable).
-
-If you do so, please remember to update manually.
 
 ## Build
 
