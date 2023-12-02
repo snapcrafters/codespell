@@ -17,7 +17,7 @@ permissions:
 jobs:
   sync-gh-releases:
     name: Sync upstream releases
-    uses: lengau/snappify/.github/workflows/sync-gh-releases.yaml@c29366560f49fb1e20cca823654c87d81678ce0a
+    uses: lengau/snappify/.github/workflows/sync-gh-releases.yaml@main
     with:
       upstream_repository: codespell-project/codespell
       max_releases: 2
