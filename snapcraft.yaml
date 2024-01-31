@@ -10,6 +10,14 @@ description: |
   Therefore it should catch errors like "adn", but it will not catch "adnasdfasdf".
   This also means it shouldn't generate false-positives when you use a niche term it doesn't know about.
 
+architectures:
+  - amd64
+  - arm64
+  - armhf
+  - ppc64el
+  - riscv64
+  - s390x
+
 confinement: strict
 base: core22
 # The base that the builds run on - allows building for other architectures
