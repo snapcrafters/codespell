@@ -39,7 +39,7 @@ jobs:
       - name: Detect channel
         id: get_channel
         run: |
-          ifif [[ "${GITHUB_REF_NAME}" == "candidate" ]]; then
+          if [[ "${GITHUB_REF_NAME}" == "candidate" ]]; then
             echo "channel=candidate" >> $GITHUB_OUTPUT
           elif [[ "${GITHUB_REF_NAME}" == "edge" ]]; then
             echo "channel=edge" >> $GITHUB_OUTPUT
