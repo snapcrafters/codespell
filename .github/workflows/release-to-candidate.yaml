@@ -53,7 +53,7 @@ jobs:
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
-          store-token: ${{ secrets.SNAP_STORE_CANDIDATE }}
+          store-token: ${{ secrets.STORE_TOKEN }}
 
   call-for-testing:
     name: 📣 Create call for testing
