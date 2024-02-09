@@ -70,6 +70,26 @@ jobs:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+  test:
+    name: 🗒️ Test snap
+    needs: call-for-testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: 💾 Setup tests
+        uses: snapcrafters/ci/setup-tests@main
+        with:
+          issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tests
+        id: tests
+        run: ./test.sh $GITHUB_OUTPUT
+      - name: 🗒️ Log test results
+        if: ${{ success() || failure() && steps.tests.conclusion == 'failure' }}
+        uses: snapcrafters/ci/log-test-results@main
+        with:
+          issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
+          test-status: ${{ steps.tests.outputs.status }}
+
   # Commented out because this is a CLI app.
   # screenshots:
   #   name: 📸 Gather screenshots
