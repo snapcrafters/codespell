@@ -33,6 +33,12 @@ website: https://github.com/codespell-project/codespell
 parts:
   codespell:
     plugin: python
+    python-packages:
+      - pip
+      - setuptools
+      - wheel
+      - tomli
+      - chardet
     source: https://github.com/codespell-project/codespell
     source-type: git
     source-tag: v2.2.6
