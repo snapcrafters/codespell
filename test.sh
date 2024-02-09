@@ -1,6 +1,9 @@
 #!/bin/bash
 # Tests for the codespell snap.
 
+# Since I don't own the "codespell" snap.
+snap alias lengau-codespell.codespell codespell
+
 repositories(){
     echo https://github.com/BaPSF/bapsflib
     echo https://github.com/J-Yaghoubi/menutools
@@ -28,7 +31,7 @@ test_repo(){
     local repo_dir=$(mktemp --directory codespell-test-XXXXXXXX)
     git clone --quiet --depth=1 $1 $repo_dir
     pushd $repo_dir
-    lengau-codespell.codespell .
+    codespell .
     local return_code=$?
     popd
     rm -rf $repo_dir
