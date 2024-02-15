@@ -1,9 +1,6 @@
 #!/bin/bash
 # Tests for the codespell snap.
 
-# Since I don't own the "codespell" snap.
-snap alias lengau-codespell.codespell codespell
-
 repositories(){
     echo https://github.com/BaPSF/bapsflib
     echo https://github.com/J-Yaghoubi/menutools
@@ -31,31 +28,34 @@ test_repo(){
     local repo_dir=$(mktemp --directory codespell-test-XXXXXXXX)
     git clone --quiet --depth=1 $1 $repo_dir
     pushd $repo_dir
-    codespell .
+    lengau-codespell.codespell .
     local return_code=$?
     popd
     rm -rf $repo_dir
     return $return_code
 }
 
-codespell --version || exit 1
-codespell --help || exit 1
+echo "::group::Version"
+lengau-codespell.codespell --version || exit 1
+echo "::endgroup::"
+echo "::group::Help"
+lengau-codespell.codespell --help || exit 1
+echo "::endgroup::"
 
 any_failed=false
 for repo in $(repositories); do
     echo "::group::${repo}"
     if test_repo "${repo}"; then
-        echo "status=$repo: success" >> $1
         echo "::endgroup::"
         echo "Succeeded"
     else
-        exit_code=$?
         any_failed=true
-        echo "status=$repo: failed with exit code $exit_code" >> $1
         echo "::endgroup::"
         echo "Failed with exit code $exit_code"
     fi
 done
 if [[ $any_failed == "true" ]]; then
+    echo "Overall: Failed"
     exit 1
 fi
+echo "Overall: Succeeded"
