@@ -1,6 +1,16 @@
 #!/bin/bash
 # Tests for the codespell snap.
 
+set -e
+
+cleanup(){
+    rm -rf codespell-snap-test-*
+}
+trap cleanup EXIT
+
+summary_file="${GITHUB_SUMMARY:-/dev/null}"
+echo -e '## Summary:\n' > "$summary_file"
+
 repositories(){
     echo https://github.com/BaPSF/bapsflib
     echo https://github.com/J-Yaghoubi/menutools
@@ -25,34 +35,33 @@ repositories(){
 }
 
 test_repo(){
-    local repo_dir=$(mktemp --directory codespell-test-XXXXXXXX)
-    git clone --quiet --depth=1 $1 $repo_dir
-    pushd $repo_dir
-    lengau-codespell.codespell .
-    local return_code=$?
-    popd
-    rm -rf $repo_dir
-    return $return_code
+    echo "::group::Repository: ${repo}"
+    local repo_dir=$(mktemp --directory codespell-snap-test-XXXXXXXX)
+    git clone --depth=1 $1 $repo_dir
+    if ( cd $repo_dir; lengau-codespell.codespell --quiet-level 0 .); then
+        echo "::endgroup::"
+        echo "Success"
+        echo "- ${repo}: Success" >> $summary_file
+    else
+        exit_code=$?
+        any_failed=true
+        echo "::endgroup::"
+        echo "Failed with exit code $exit_code"
+        echo "- ${repo}: Failed with exit code $exit_code" >> $summary_file
+    fi
+
 }
 
-echo "::group::Version"
-lengau-codespell.codespell --version || exit 1
+echo -n "codespell version: " >> $summary_file
+lengau-codespell.codespell --version | tee -a $summary_file
 echo "::endgroup::"
 echo "::group::Help"
-lengau-codespell.codespell --help || exit 1
+lengau-codespell.codespell --help
 echo "::endgroup::"
 
 any_failed=false
 for repo in $(repositories); do
-    echo "::group::${repo}"
-    if test_repo "${repo}"; then
-        echo "::endgroup::"
-        echo "Succeeded"
-    else
-        any_failed=true
-        echo "::endgroup::"
-        echo "Failed with exit code $exit_code"
-    fi
+    test_repo "${repo}"
 done
 if [[ $any_failed == "true" ]]; then
     echo "Overall: Failed"
