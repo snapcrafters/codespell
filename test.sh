@@ -9,7 +9,6 @@ cleanup(){
 trap cleanup EXIT
 
 summary_file="${GITHUB_STEP_SUMMARY:-/dev/stderr}"
-echo -e '## Summary:\n' > "$summary_file"
 
 repositories(){
     echo https://github.com/BaPSF/bapsflib
@@ -38,33 +37,31 @@ test_repo(){
     echo "::group::Repository: ${repo}"
     local repo_dir=$(mktemp --directory codespell-snap-test-XXXXXXXX)
     git clone --depth=1 $1 $repo_dir
+    echo -n "| ${repo} | $(cd ruff; git rev-parse --short HEAD) | " >> $summary_file
     if ( cd $repo_dir; lengau-codespell.codespell --quiet-level 0 .); then
         echo "::endgroup::"
         echo "Success"
-        echo "- ${repo}: Success" >> $summary_file
+        echo "✔️ | 0 |" >> $summary_file
     else
         exit_code=$?
         any_failed=true
         echo "::endgroup::"
         echo "Failed with exit code $exit_code"
-        echo "- ${repo}: Failed with exit code $exit_code" >> $summary_file
+        echo "❌ | $exit_code |" >> $summary_file
     fi
 
 }
 
 echo -n "codespell version: " >> $summary_file
-lengau-codespell.codespell --version | tee -a $summary_file
+(lengau-codespell.codespell --version | tee -a $summary_file) || exit 1
 echo "::endgroup::"
 echo "::group::Help"
-lengau-codespell.codespell --help
+lengau-codespell.codespell --help || exit 1
 echo "::endgroup::"
 
-any_failed=false
+echo "| Repository | Commit | Success | Exit code |" >> $summary_file
+echo "|------------|--------|---------|-----------|" >> $summary_file
+
 for repo in $(repositories); do
     test_repo "${repo}"
 done
-if [[ $any_failed == "true" ]]; then
-    echo "Overall: Failed"
-    exit 1
-fi
-echo "Overall: Succeeded"
