@@ -40,9 +40,9 @@ jobs:
         id: get_channel
         run: |
           if [[ "${GITHUB_REF_NAME}" == "candidate" ]]; then
-            echo "channel=candidate" >> $GITHUB_OUTPUT
+            echo "channel=latest/candidate" >> $GITHUB_OUTPUT
           elif [[ "${GITHUB_REF_NAME}" == "edge" ]]; then
-            echo "channel=edge" >> $GITHUB_OUTPUT
+            echo "channel=latest/edge" >> $GITHUB_OUTPUT
           else
             echo "channel=latest/edge/${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
           fi
