@@ -3,7 +3,7 @@ name: Release
 on:
   # Run the workflow each time new commits are pushed to the candidate branch.
   push:
-    branches: [ "candidate", "edge" ]
+    branches: ["candidate"]
   workflow_dispatch:
 
 concurrency:
@@ -32,24 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: "Candidate Branch"
     strategy:
-      fail-fast: false
       matrix:
         architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
     steps:
-      - name: Detect channel
-        id: get_channel
-        run: |
-          if [[ "${GITHUB_REF_NAME}" == "candidate" ]]; then
-            echo "channel=latest/candidate" >> $GITHUB_OUTPUT
-          elif [[ "${GITHUB_REF_NAME}" == "edge" ]]; then
-            echo "channel=latest/edge" >> $GITHUB_OUTPUT
-          else
-            echo "channel=latest/edge/${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
-          fi
       - name: 🚢 Release to latest/candidate
         uses: snapcrafters/ci/release-to-candidate@main
         with:
-          channel: ${{ steps.get_channel.outputs.channel }}
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
@@ -81,17 +69,3 @@ jobs:
           issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-script: ./test.sh
-
-  # Commented out because this is a CLI app.
-  # screenshots:
-  #   name: 📸 Gather screenshots
-  #   needs: call-for-testing
-  #   environment: "Candidate Branch"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: 📸 Gather screenshots
-  #       uses: snapcrafters/ci/get-screenshots@main
-  #       with:
-  #         issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
-  #         screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
