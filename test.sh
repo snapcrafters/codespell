@@ -38,7 +38,7 @@ test_repo(){
     local repo_dir=$(mktemp --directory codespell-snap-test-XXXXXXXX)
     git clone --depth=1 $1 $repo_dir
     echo -n "| ${repo} | $(cd $repo_dir; git rev-parse --short HEAD) | " >> $summary_file
-    if ( cd $repo_dir; lengau-codespell.codespell --quiet-level 0 .); then
+    if ( cd $repo_dir; codespell --quiet-level 0 .); then
         echo "::endgroup::"
         echo "Success"
         echo "✔️ | 0 |" >> $summary_file
@@ -53,10 +53,10 @@ test_repo(){
 }
 
 echo -n "codespell version: " >> $summary_file
-(lengau-codespell.codespell --version | tee -a $summary_file) || exit 1
+(codespell --version | tee -a $summary_file) || exit 1
 echo "::endgroup::"
 echo "::group::Help"
-lengau-codespell.codespell --help || exit 1
+codespell --help || exit 1
 echo "::endgroup::"
 
 echo "| Repository | Commit | Success | Exit code |" >> $summary_file
