@@ -41,7 +41,7 @@ parts:
       - chardet
     source: https://github.com/codespell-project/codespell
     source-type: git
-    source-tag: v2.2.6
+    source-tag: v$SNAPCRAFT_PROJECT_VERSION
     source-depth: 1
 
 apps:
