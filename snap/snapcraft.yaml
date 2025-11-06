@@ -1,5 +1,5 @@
 name: codespell
-version: 2.3.0
+version: 2.4.1
 summary: Fix common misspellings in your code
 # noinspection YAMLSchemaValidation
 # https://youtrack.jetbrains.com/issue/PY-58754
