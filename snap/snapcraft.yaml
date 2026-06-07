@@ -20,8 +20,6 @@ architectures:
 
 confinement: strict
 base: core22
-# The base that the builds run on - allows building for other architectures
-build-base: core22
 compression: xz
 contact: https://github.com/lengau/codespell-snap/issues
 issues:
