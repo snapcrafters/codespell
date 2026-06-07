@@ -10,16 +10,16 @@ description: |
   Therefore it should catch errors like "adn", but it will not catch "adnasdfasdf".
   This also means it shouldn't generate false-positives when you use a niche term it doesn't know about.
 
-architectures:
-  - amd64
-  - arm64
-  - armhf
-  - ppc64el
-  - riscv64
-  - s390x
+platforms:
+  amd64:
+  arm64:
+  armhf:
+  ppc64el:
+  riscv64:
+  s390x:
 
 confinement: strict
-base: core22
+base: core24
 compression: xz
 contact: https://github.com/lengau/codespell-snap/issues
 issues:
