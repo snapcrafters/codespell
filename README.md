@@ -1,6 +1,6 @@
 [![codespell](https://snapcraft.io/codespell/badge.svg)](https://snapcraft.io/codespell)
 [![codespell](https://snapcraft.io/codespell/trending.svg?name=0)](https://snapcraft.io/codespell)
-[![Release](https://github.com/snapcrafters/codespell/actions/workflows/release-to-candidate.yaml/badge.svg)](https://github.com/snapcrafters/codespell/actions/workflows/release-to-candidate.yaml)
+[![Release](https://github.com/snapcrafters/codespell/actions/workflows/release-to-candidate.yml/badge.svg)](https://github.com/snapcrafters/codespell/actions/workflows/release-to-candidate.yml)
 
 # codespell snap
 
